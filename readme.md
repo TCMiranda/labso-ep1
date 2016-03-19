@@ -2,7 +2,7 @@
 
 ### Instruções
 
-O projeto está organizado em
+##### O projeto está organizado em
 
     dist/          // Compilado
     src/           // Fontes
@@ -12,18 +12,20 @@ O projeto está organizado em
 
     processes.csv  // Arquivo de entrada
 
-Para executar e desenvolver basta
+##### Para executar e desenvolver basta
 
 `./build.sh` para compilar
 `./run.sh` para executar
 
 Ou ainda `(./build.sh; ./run.sh)` para ambos.
 
+##### Extras
+
 Definições extras sobre o programa, como tamanho da memória em:
 
     /src/h/simulator_defs.h
 
-### Progresso
+## Progresso
 
 #### Carregamento / setup
 - [x] Leitura dos eventos
