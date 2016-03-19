@@ -1,5 +1,28 @@
 ## EPI 1
 
+### Instruções
+
+O projeto está organizado em
+
+    dist/          // Compilado
+    src/           // Fontes
+
+    build.sh       // Compila os fontes de src/ para dist/
+    run.sh         // Executa o compilado em dist
+
+    processes.csv  // Arquivo de entrada
+
+Para executar e desenvolver basta
+
+`./build.sh` para compilar
+`./run.sh` para executar
+
+Definições extras sobre o programa, como tamanho da memória em:
+
+    /src/h/simulator_defs.h
+
+### Progresso
+
 #### Carregamento / setup
 - [x] Leitura dos eventos
 - [x] Enfileiramento dos eventos
