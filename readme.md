@@ -17,6 +17,8 @@ Para executar e desenvolver basta
 `./build.sh` para compilar
 `./run.sh` para executar
 
+Ou ainda `(./build.sh; ./run.sh)` para ambos.
+
 Definições extras sobre o programa, como tamanho da memória em:
 
     /src/h/simulator_defs.h
