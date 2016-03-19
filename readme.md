@@ -44,3 +44,11 @@ Definições extras sobre o programa, como tamanho da memória em:
 - [ ] Execucao do slice definido
 - [ ] Validacao do evento
 - [ ] Loop
+
+## etc
+
+    $ gcc --version
+    gcc (GCC) 4.9.2 20150212 (Red Hat 4.9.2-6)
+    Copyright (C) 2014 Free Software Foundation, Inc.
+    This is free software; see the source for copying conditions.  There is NO
+    warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.

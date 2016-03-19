@@ -7,7 +7,7 @@ typedef enum {
 typedef struct process {
 
   int id;            // process id
-  int arrival_time;  // arrival time in loop units
+  int arrival_time;  // arrival time in "loop units"
   int cpu_cycles;    // cpu cycles consumption
   int memory;        // memory to be loaded
   int io;            // i/o event number
