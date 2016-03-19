@@ -1,4 +1,4 @@
-## EPI 1
+## EPI 1 Computer system simulation
 
 ### Instruções
 
