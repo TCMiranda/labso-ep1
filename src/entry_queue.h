@@ -8,7 +8,9 @@ queue_cursor* getEntryQueue() {
 /* Push processes to entry queue and decrease its arrival_time
  * Should be called at the beginning of each loop
  */
-void entryQueueProcessValidator(oneway_list* item, void* entry_queue) {
+void entryQueueProcessValidator(oneway_list* item, va_list vas) {
+
+  queue_cursor* entry_queue = va_arg(vas, queue_cursor*);
 
   if (item->process->arrival_time == 0) {
 

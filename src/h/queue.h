@@ -9,7 +9,7 @@ typedef struct queue_cursor {
 
 } queue_cursor;
 
-typedef void (*cursorCallback) (oneway_list*, void*);
+typedef void (*cursorCallback) (oneway_list*, va_list);
 
 queue_cursor* resetCursor(queue_cursor* cursor) {
 
@@ -17,11 +17,15 @@ queue_cursor* resetCursor(queue_cursor* cursor) {
   return cursor;
 }
 
-void forEachCursor(queue_cursor* cursor, cursorCallback callback, void* arg ) {
+void forEachCursor(queue_cursor* cursor, cursorCallback callback, ... ) {
+
+  va_list vas;
 
   while (true) {
 
-    callback(cursor->current, arg);
+    va_start(vas, callback);
+    callback(cursor->current, vas);
+    va_end(vas);
 
     if (cursor->current->next != NULL) {
 

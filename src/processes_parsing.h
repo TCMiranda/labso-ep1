@@ -113,17 +113,17 @@ void printProcess(process* process) {
   return;
 }
 
-void processDumper(oneway_list* item, void* arg) {
+void processDumper(oneway_list* item, va_list vas) {
 
   printProcess(item->process);
 }
 
-void processPrinter(oneway_list* item, void* arg) {
+void processPrinter(oneway_list* item, va_list vas) {
 
   printf("* %d \n", item->process->id);
 }
 
-void processArrivalTimePrinter(oneway_list* item, void* arg) {
+void processArrivalTimePrinter(oneway_list* item, va_list vas) {
 
   printf("* Process %d: %d\n", item->process->id, item->process->arrival_time);
 }

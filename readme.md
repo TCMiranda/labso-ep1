@@ -38,11 +38,11 @@ Definições extras sobre o programa, como tamanho da memória em:
 - [ ] Validação da memoria disponivel
 - [ ] Carregamento de eventos na fila de entrada em memoria disponivel
 
-#### Execucao
+#### Execução
 - [ ] Escolha algoritimo de escalonamento
 - [ ] Escolha do evento da fila de pronto
-- [ ] Execucao do slice definido
-- [ ] Validacao do evento
+- [ ] Execução do slice definido
+- [ ] Validação do evento
 - [ ] Loop
 
 ## etc

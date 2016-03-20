@@ -2,7 +2,9 @@
 #define PROCESS_TYPES_HEADERS
 
 typedef enum {
-  true  = 1, false = 0, debug = DEBUG } bool;
+  true  = 1,
+  false = 0
+} bool;
 
 typedef struct process {
 

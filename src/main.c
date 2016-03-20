@@ -8,13 +8,14 @@ int main() {
   while (true) {
 
     updateEntryQueue(processes, entry_queue);
-    forEachCursor(entry_queue, &processPrinter, NULL);
+    forEachCursor(entry_queue, &processPrinter);
+    getMemoryMap();
 
     break;
   }
 
   printf("\n");
-  forEachCursor(processes, &processArrivalTimePrinter, NULL);
+  forEachCursor(processes, &processArrivalTimePrinter);
 
   printf("\nReset cursor, current id: %d\n", processes->current->process->id);
   printf("End.\n");
