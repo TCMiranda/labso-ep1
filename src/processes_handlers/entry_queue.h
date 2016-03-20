@@ -17,12 +17,12 @@ void entryQueueProcessValidator(oneway_list* item, va_list vas) {
     oneway_list* node = getListNode();
     node->process = item->process;
 
-    cursorPush(entry_queue, node);
+    qc_push(entry_queue, node);
   }
 
   item->process->arrival_time--;
 }
 void updateEntryQueue(queue_cursor* processes, queue_cursor* entry_queue) {
 
-  forEachCursor(processes, &entryQueueProcessValidator, entry_queue);
+  qc_foreach(processes, &entryQueueProcessValidator, entry_queue);
 }

@@ -35,12 +35,14 @@ Definições extras sobre o programa, como tamanho da memória em:
 #### Loop
 - [x] Validacao do "tempo de chegada"
 - [x] Ecaminhamento do evento a fila de entrada
+
+#### Carregamento
+- [x] Escolha algoritimo de escalonamento
+- [ ] Escolha do evento da fila de pronto
 - [ ] Validação da memoria disponivel
-- [ ] Carregamento de eventos na fila de entrada em memoria disponivel
+- [ ] Carregamento do evento escolhido em memoria disponivel
 
 #### Execução
-- [ ] Escolha algoritimo de escalonamento
-- [ ] Escolha do evento da fila de pronto
 - [ ] Execução do slice definido
 - [ ] Validação do evento
 - [ ] Loop

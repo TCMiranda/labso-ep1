@@ -120,10 +120,10 @@ void processDumper(oneway_list* item, va_list vas) {
 
 void processPrinter(oneway_list* item, va_list vas) {
 
-  printf("* %d \n", item->process->id);
+  printf("%d; ", item->process->id);
 }
 
 void processArrivalTimePrinter(oneway_list* item, va_list vas) {
 
-  printf("* Process %d: %d\n", item->process->id, item->process->arrival_time);
+  printf("P(%d: %d); ", item->process->id, item->process->arrival_time);
 }

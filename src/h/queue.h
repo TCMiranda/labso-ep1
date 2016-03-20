@@ -9,18 +9,17 @@ typedef struct queue_cursor {
 
 } queue_cursor;
 
-typedef void (*cursorCallback) (oneway_list*, va_list);
+typedef void (*qc_callback) (oneway_list*, va_list);
 
-queue_cursor* resetCursor(queue_cursor* cursor) {
+queue_cursor* qc_reset(queue_cursor* cursor) {
 
   cursor->current = cursor->head;
   return cursor;
 }
 
-void forEachCursor(queue_cursor* cursor, cursorCallback callback, ... ) {
+void qc_foreach(queue_cursor* cursor, qc_callback callback, ... ) {
 
   va_list vas;
-
   while (true) {
 
     va_start(vas, callback);
@@ -33,13 +32,13 @@ void forEachCursor(queue_cursor* cursor, cursorCallback callback, ... ) {
 
     } else {
 
-      cursor = resetCursor(cursor);
+      cursor = qc_reset(cursor);
       break;
     }
   }
 }
 
-void cursorPush(queue_cursor* cursor, oneway_list* item) {
+void qc_push(queue_cursor* cursor, oneway_list* item) {
 
   (cursor->head == NULL)     && (cursor->head = item);
   (cursor->current == NULL)  && (cursor->current = item);
@@ -47,6 +46,20 @@ void cursorPush(queue_cursor* cursor, oneway_list* item) {
   (cursor->tail != NULL)     && (cursor->tail->next = item);
 
   cursor->tail = item;
+}
+
+void qc_shift(queue_cursor* cursor) {
+
+  oneway_list* head = cursor->head;
+
+  if (cursor->head->next != NULL) {
+
+    cursor->head = cursor->head->next;
+
+  } else {
+
+    cursor->head = NULL;
+  }
 }
 
 #endif
