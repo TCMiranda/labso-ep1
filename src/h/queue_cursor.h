@@ -5,19 +5,22 @@ typedef struct queue_cursor {
 
   oneway_list* head;
   oneway_list* tail;
+  oneway_list* previous;
   oneway_list* current;
 
 } queue_cursor;
 
-typedef void (*qc_callback) (oneway_list*, va_list);
+typedef void (*qc_foreach_callback) (oneway_list*, va_list);
+typedef void (*qc_iterate_callback) (queue_cursor*, va_list);
 
 queue_cursor* qc_reset(queue_cursor* cursor) {
 
   cursor->current = cursor->head;
+  cursor->previous = NULL;
   return cursor;
 }
 
-void qc_foreach(queue_cursor* cursor, qc_callback callback, ... ) {
+void qc_foreach(queue_cursor* cursor, qc_foreach_callback callback, ... ) {
 
   va_list vas;
   while (true) {
@@ -28,13 +31,37 @@ void qc_foreach(queue_cursor* cursor, qc_callback callback, ... ) {
       callback(cursor->current, vas);
       va_end(vas);
 
-    } else {
-
-      break;
-    }
+    } else break;
 
     if (cursor->current->next != NULL) {
 
+      cursor->previous = cursor->current;
+      cursor->current = cursor->current->next;
+
+    } else {
+
+      cursor = qc_reset(cursor);
+      break;
+    }
+  }
+}
+
+void qc_iterate(queue_cursor* cursor, qc_iterate_callback callback, ... ) {
+
+  va_list vas;
+  while (true) {
+
+    if (cursor->current) {
+
+      va_start(vas, callback);
+      callback(cursor, vas);
+      va_end(vas);
+
+    } else break;
+
+    if (cursor->current->next != NULL) {
+
+      cursor->previous = cursor->current;
       cursor->current = cursor->current->next;
 
     } else {
@@ -66,6 +93,22 @@ void qc_shift(queue_cursor* cursor) {
   } else {
 
     cursor->head = NULL;
+  }
+}
+
+void qc_deleteCurrent(queue_cursor* cursor) {
+
+  if (cursor->current == NULL)
+    return;
+
+  if (cursor->previous != NULL) {
+
+    cursor->previous->next = cursor->current->next;
+    cursor->current = cursor->current->next;
+
+  } else {
+
+    qc_shift(cursor);
   }
 }
 

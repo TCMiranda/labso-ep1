@@ -19,7 +19,7 @@ queue_cursor* schl_getJobQueue() {
 
   schl_configure();
 
-  queue_cursor* job_queue = malloc(sizeof(queue_cursor*));
+  queue_cursor* job_queue = malloc(sizeof(queue_cursor));
 
   return job_queue;
 }

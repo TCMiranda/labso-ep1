@@ -39,7 +39,7 @@ int main() {
    *
    * -> Loop
    */
-  printf(" Cycle  Task -> Output\n");
+  printf(" Cycle   Task  ->  Output\n");
 
   event_loop_key current_task;
 
@@ -47,7 +47,7 @@ int main() {
   while (++cycle) {
 
     current_task = ev_getCurrentTask();
-    printf("[ % 3d ]   %d  -> ", cycle, current_task);
+    printf("[ % 4d ]   %d   ->  ", cycle, current_task);
 
     switch (current_task) {
 
@@ -56,6 +56,7 @@ int main() {
       updateEntryQueue(processes, entry_queue);
 
       printf("Entry: "); qc_foreach(entry_queue, &processPrinter);
+      printf("Processes: %d ", getProcessesLength(processes));
 
       ev_setNextTask(MEMORY_REQUEST);
       break;
@@ -109,15 +110,18 @@ int main() {
       break;
     }
 
+    updateEntryArrivalTime(processes);
+
     printf("\n");
 
-    if (cycle > 50 || current_task == EXIT) break;
+    if (( getProcessesLength(entry_queue) == 0 &&
+          getProcessesLength(job_queue)   == 0 &&
+          getProcessesLength(processes)   == 0 )
+        || current_task == EXIT
+        || cycle > 140 ) break;
 
-    //(DEBUG && usleep(LOOP_CYCLE_DELAY));
+    (DEBUG && usleep(LOOP_CYCLE_DELAY));
   }
-
-  printf("\n\\-_\nReset cursor, current id: %d\n",
-         processes->current->process->id);
 
   printf("End.\n");
   return 0;

@@ -9,7 +9,7 @@
 /* Data types */
 #include <event_loop.h>
 #include <process.h>
-#include <queue.h>
+#include <queue_cursor.h>
 #include <memory_map.h>
 
 /* Processes handlers */

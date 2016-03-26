@@ -47,7 +47,7 @@ process* getNextProcessDef(FILE* file) {
 
 queue_cursor* getProcesses(FILE* file) {
 
-  queue_cursor* cursor = malloc(sizeof(queue_cursor*));
+  queue_cursor* cursor = malloc(sizeof(queue_cursor));
 
   oneway_list* processes = malloc(sizeof(oneway_list*));
   oneway_list* head = NULL;
@@ -100,6 +100,12 @@ queue_cursor* getProcessesList() {
   return getProcesses(f);
 }
 
+void counter(oneway_list* item, va_list vas) {
+
+  int* counter = va_arg(vas, int*);
+  (*counter)++;
+}
+
 void printProcess(process* process) {
 
   printf("Node(%d) {\n  time: %d\n  cpu: %d\n  memory: %d\n  io: %d \n}\n\n",
@@ -125,4 +131,13 @@ void processPrinter(oneway_list* item, va_list vas) {
 void processArrivalTimePrinter(oneway_list* item, va_list vas) {
 
   printf("P(%d: %d); ", item->process->id, item->process->arrival_time);
+}
+
+int getProcessesLength(queue_cursor* processes) {
+
+  int processes_length = 0;
+  int* c = &processes_length;
+  qc_foreach(processes, &counter, c);
+
+  return processes_length;
 }
