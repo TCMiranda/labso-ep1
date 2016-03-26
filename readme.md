@@ -54,8 +54,14 @@ Definições extras sobre o programa, como tamanho da memória em:
 #### Execução
 - [x] Execução do slice definido - fcfs
 - [ ] Execução do slice definido - rr
-- [ ] Validação do evento
-- [ ] Loop
+- [x] Validação do evento
+- [x] Loop
+
+#### IO
+- [ ] Criar fila para interrupção por IO
+- [ ] Validar entrada de eventos de IO do processo executado
+- [ ] Enviar processos para fila de IO e agendar execução
+- [ ] Reenviar processo a fila de entrada após término do IO
 
 ## etc
 

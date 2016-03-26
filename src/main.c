@@ -101,7 +101,6 @@ int main() {
     case CPU_RELEASE:
 
       schl_releaseJob(job_queue);
-
       break;
 
     default:
@@ -123,6 +122,6 @@ int main() {
     (DEBUG && usleep(LOOP_CYCLE_DELAY));
   }
 
-  printf("End.\n");
+  printf("\n_End. Print metrics.\n");
   return 0;
 }
