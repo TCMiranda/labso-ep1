@@ -41,17 +41,19 @@ Definições extras sobre o programa, como tamanho da memória em:
 #### Loop
 - [x] Validacao do "tempo de chegada"
 - [x] Ecaminhamento do evento a fila de entrada
-- [ ] Definição e escolha da task atual
-- [ ] Execução da task atual
+- [x] Definição e escolha da task atual
+- [x] Execução da task atual
 
 #### Carregamento
 - [x] Escolha algoritimo de escalonamento
 - [x] Escolha do evento da fila de pronto
 - [x] Validação da memoria disponivel
-- [ ] Carregamento do evento escolhido em memoria disponivel
+- [x] Carregamento do evento escolhido em memoria disponivel
+- [ ] Divisão da memória em páginas
 
 #### Execução
-- [ ] Execução do slice definido
+- [x] Execução do slice definido - fcfs
+- [ ] Execução do slice definido - rr
 - [ ] Validação do evento
 - [ ] Loop
 
