@@ -7,6 +7,7 @@
 #include <simulator_defs.h>
 
 /* Data types */
+#include <event_loop.h>
 #include <process.h>
 #include <queue.h>
 #include <memory_map.h>

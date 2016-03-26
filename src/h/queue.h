@@ -22,9 +22,16 @@ void qc_foreach(queue_cursor* cursor, qc_callback callback, ... ) {
   va_list vas;
   while (true) {
 
-    va_start(vas, callback);
-    callback(cursor->current, vas);
-    va_end(vas);
+    if (cursor->current) {
+
+      va_start(vas, callback);
+      callback(cursor->current, vas);
+      va_end(vas);
+
+    } else {
+
+      break;
+    }
 
     if (cursor->current->next != NULL) {
 

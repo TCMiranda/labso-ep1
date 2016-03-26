@@ -48,10 +48,12 @@ Definições extras sobre o programa, como tamanho da memória em:
 - [x] Escolha algoritimo de escalonamento
 - [x] Escolha do evento da fila de pronto
 - [x] Validação da memoria disponivel
-- [ ] Carregamento do evento escolhido em memoria disponivel
+- [x] Carregamento do evento escolhido em memoria disponivel
+- [ ] Divisão da memória em páginas
 
 #### Execução
-- [ ] Execução do slice definido
+- [x] Execução do slice definido - fcfs
+- [ ] Execução do slice definido - rr
 - [ ] Validação do evento
 - [ ] Loop
 

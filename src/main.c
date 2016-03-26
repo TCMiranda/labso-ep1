@@ -20,8 +20,6 @@ int main() {
 
   memory_map* memory = memm_getMemoryMap();
 
-  int cycle = 0;
-
   /*
    * Main event loop
    *
@@ -41,31 +39,81 @@ int main() {
    *
    * -> Loop
    */
+  printf(" Cycle  Task -> Output\n");
+
+  event_loop_key current_task;
+
+  int cycle = 0;
   while (++cycle) {
 
-    printf("\\_Cycle %d__\\", cycle);
+    current_task = ev_getCurrentTask();
+    printf("[ % 3d ]   %d  -> ", cycle, current_task);
 
-    updateEntryQueue(processes, entry_queue);
+    switch (current_task) {
 
-    printf("\n[Ready] ");
-    qc_foreach(entry_queue, &processPrinter);
+    case PROCESSES_ENTRY:
 
-    /* GetNextJob and push it to job_queue if not already pushed */
-    schl_getNextJob(entry_queue, job_queue, memory);
+      updateEntryQueue(processes, entry_queue);
 
-    printf("\n[Jobs] ");
-    qc_foreach(job_queue, &processPrinter);
+      printf("Entry: "); qc_foreach(entry_queue, &processPrinter);
 
-    printf("\n[Memm] %d",
-           memory->max_frames - memory->available_frames);
+      ev_setNextTask(MEMORY_REQUEST);
+      break;
 
-    /* Execute the process */
-    schl_executeJob(job_queue);
+    case MEMORY_REQUEST:
+
+      schl_getNextJob(entry_queue, job_queue, memory);
+
+      printf("Jobs: "); qc_foreach(job_queue, &processPrinter);
+
+      if (job_queue->head != NULL) {
+
+        ev_setNextTask(CPU_REQUEST);
+
+      } else {
+
+        ev_setNextTask(PROCESSES_ENTRY);
+      }
+      break;
+
+    case CPU_REQUEST:
+
+      schl_executeJob(job_queue);
+
+      break;
+
+    case IO_REQUEST:
+
+
+      break;
+
+    case IO_EXECUTION:
+
+
+      break;
+
+    case IO_RELEASE:
+
+
+      break;
+
+    case CPU_RELEASE:
+
+      schl_releaseJob(job_queue);
+
+      break;
+
+    default:
+
+      ev_setNextTask(PROCESSES_ENTRY);
+      break;
+    }
 
     printf("\n");
-    if (cycle > 67) break;
 
-    (DEBUG && usleep(LOOP_CYCLE_DELAY));
+    if (cycle > 50 || current_task == EXIT) break;
+
+    //(DEBUG && usleep(LOOP_CYCLE_DELAY));
   }
 
   printf("\n\\-_\nReset cursor, current id: %d\n",

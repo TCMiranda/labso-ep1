@@ -5,7 +5,7 @@ FILE* getProcessesFile() {
   FILE* file;
   if (file = fopen(PROCESSES_DEFS_FILENAME, "r")) {
 
-    printf("Got file %s\n\n", PROCESSES_DEFS_FILENAME);
+    printf("Got file %s\n", PROCESSES_DEFS_FILENAME);
     return file;
   }
 
@@ -58,7 +58,7 @@ queue_cursor* getProcesses(FILE* file) {
     process* p;
     if ( !(p = getNextProcessDef(file)) ) {
 
-      printf("Finished reading\nLast id: %d\n\n",
+      printf("Got processes defs. Last id: %d\n\n",
              processes->process->id );
 
       tail = processes;
@@ -81,7 +81,6 @@ queue_cursor* getProcesses(FILE* file) {
       /* Assign head item on the first time */
       if (!head) {
 
-        printf("Assign list head\n");
         (head = processes);
       }
     }
