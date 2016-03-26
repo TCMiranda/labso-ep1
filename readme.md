@@ -4,7 +4,7 @@
 
 Nos detalhes da implementação, estão as explicações sobre a estrutura dos códigos fonte. Como foi feita a organização dos arquivos, e a definição das estruturas de dados.
 
-Consta também a forma que foi feita a implementação do loop de evento, de forma a simular todos os casos de eventos, processamento, escalonamento, memória, io, etc.
+Consta também a forma que foi feita a implementação do loop de eventos, de forma a simular todos os casos de execução de processos em um computador segundo definido no artigo como _BASYS simulator_, processamento, escalonamento, memória, io, etc.
 
 ### Instruções
 
