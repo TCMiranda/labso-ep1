@@ -1,5 +1,11 @@
 ## EPI 1 Computer system simulation
 
+#### [Detalhes da implementação](./docs/main.md)
+
+Nos detalhes da implementação, estão as explicações sobre a estrutura dos códigos fonte. Como foi feita a organização dos arquivos, e a definição das estruturas de dados.
+
+Consta também a forma que foi feita a implementação do loop de evento, de forma a simular todos os casos de eventos, processamento, escalonamento, memória, io, etc.
+
 ### Instruções
 
 ##### O projeto está organizado em
@@ -28,18 +34,20 @@ Definições extras sobre o programa, como tamanho da memória em:
 ## Progresso
 
 #### Carregamento / setup
+- [x] Inicio do loop de eventos
 - [x] Leitura dos eventos
 - [x] Enfileiramento dos eventos
-- [x] Inicio do loop de eventos
 
 #### Loop
 - [x] Validacao do "tempo de chegada"
 - [x] Ecaminhamento do evento a fila de entrada
+- [ ] Definição e escolha da task atual
+- [ ] Execução da task atual
 
 #### Carregamento
 - [x] Escolha algoritimo de escalonamento
-- [ ] Escolha do evento da fila de pronto
-- [ ] Validação da memoria disponivel
+- [x] Escolha do evento da fila de pronto
+- [x] Validação da memoria disponivel
 - [ ] Carregamento do evento escolhido em memoria disponivel
 
 #### Execução
