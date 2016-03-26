@@ -1,5 +1,17 @@
 #include <headers.h>
 
+/*
+ * Maintains the rerefences to execute the event loop
+ *
+ * * processes   -> Processes definitions list loaded from disk
+ * * entry_queue -> Arrived processes queue, updated every loop
+ * * job_queue   -> Executing processes queue, updated on scheduler call
+ * * memory      -> Memory map, called on central memory request
+ *
+ * `cycle`       :: Maintains the current CPU cycle
+ * `schedule`    :: Maintains the next event step
+ *
+ */
 int main() {
 
   queue_cursor* processes = getProcessesList();
@@ -10,6 +22,25 @@ int main() {
 
   int cycle = 0;
 
+  /*
+   * Main event loop
+   *
+   * The cycle is currently executing all steps at once.
+   * It should instead apply only one action per cicle:
+   *
+   * -> Update entry queue
+   *   -> Decrease arrival_time
+   *   -> Push arrived events to entry queue
+   *
+   * -> Get next job (job or entry queue)
+   *   -> Check job queue
+   *   -> Load job in memory
+   *
+   * -> Execute job slice
+   *   -> Removes from job queue if finished
+   *
+   * -> Loop
+   */
   while (++cycle) {
 
     printf("\\_Cycle %d__\\", cycle);
@@ -39,6 +70,7 @@ int main() {
 
   printf("\n\\-_\nReset cursor, current id: %d\n",
          processes->current->process->id);
+
   printf("End.\n");
   return 0;
 }

@@ -20,7 +20,7 @@ void fcfs_getNextJob(queue_cursor* entry_queue, queue_cursor* job_queue, memory_
 
   } else {
 
-    free(job);
+    /* Failed to allocate momory, do smth */
   }
 }
 
@@ -31,7 +31,11 @@ void fcfs_executeJob(queue_cursor* job_queue) {
   if (--job_queue->current->process->cpu_cycles < 0) {
 
     /* remove process from job_queue */
+    qc_reset(job_queue);
 
-    printf("* End %d\n", job_queue->current->process->id);
+    qc_shift(job_queue);
+    printf("* shift %d\n", job_queue->current->process->id);
+
+    qc_reset(job_queue);
   }
 }
