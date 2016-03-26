@@ -41,8 +41,8 @@ Definições extras sobre o programa, como tamanho da memória em:
 #### Loop
 - [x] Validacao do "tempo de chegada"
 - [x] Ecaminhamento do evento a fila de entrada
-- [ ] Definição e escolha da task atual
-- [ ] Execução da task atual
+- [x] Definição e escolha da task atual
+- [x] Execução da task atual
 
 #### Carregamento
 - [x] Escolha algoritimo de escalonamento
