@@ -2,6 +2,7 @@
 #define SIMULATOR_DEFS
 
 #define DEBUG true
+#define LOOP_CYCLE_DELAY 125000
 
 /* Memm related defs */
 #define MAX_MEMORY_FRAMES 120

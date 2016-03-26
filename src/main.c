@@ -56,16 +56,16 @@ int main() {
     printf("\n[Jobs] ");
     qc_foreach(job_queue, &processPrinter);
 
-    printf("\n[Memm] %d-%d=%d",
-           memory->max_frames,
-           memory->available_frames,
+    printf("\n[Memm] %d",
            memory->max_frames - memory->available_frames);
 
     /* Execute the process */
     schl_executeJob(job_queue);
 
     printf("\n");
-    if (cycle > 3) break;
+    if (cycle > 67) break;
+
+    (DEBUG && usleep(LOOP_CYCLE_DELAY));
   }
 
   printf("\n\\-_\nReset cursor, current id: %d\n",
