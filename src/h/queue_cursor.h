@@ -25,7 +25,7 @@ void qc_foreach(queue_cursor* cursor, qc_foreach_callback callback, ... ) {
   va_list vas;
   while (true) {
 
-    if (cursor->current) {
+    if (cursor->current != NULL) {
 
       va_start(vas, callback);
       callback(cursor->current, vas);
@@ -51,7 +51,7 @@ void qc_iterate(queue_cursor* cursor, qc_iterate_callback callback, ... ) {
   va_list vas;
   while (true) {
 
-    if (cursor->current) {
+    if (cursor->current != NULL) {
 
       va_start(vas, callback);
       callback(cursor, vas);
@@ -85,6 +85,17 @@ void qc_push(queue_cursor* cursor, oneway_list* item) {
 void qc_shift(queue_cursor* cursor) {
 
   oneway_list* head = cursor->head;
+
+  if (cursor->head != NULL) {
+
+    if (cursor->head->process != NULL) {
+
+      if (head != NULL) {
+
+        //free(head);
+      }
+    }
+  }
 
   if (cursor->head->next != NULL) {
 

@@ -10,7 +10,7 @@ void fcfs_getNextJob(queue_cursor* entry_queue, queue_cursor* job_queue, memory_
     return;
   }
 
-  oneway_list* job = getListNode();
+  oneway_list* job = ol_getListNode();
   job->process = entry_queue->head->process;
 
   if (memm_loadProcess(memory, job->process)) {
@@ -43,14 +43,38 @@ void fcfs_executeJob(queue_cursor* job_queue) {
 
   if (job_queue->current) {
 
-    printf("Exec: %d; ", job_queue->current->process->id);
+    /* Choose between CPU processing or IO request */
+    if (job_queue->current->process->io_requests > 0 &&
+        job_queue->current->process->io_current == 0) {
 
-    if (--job_queue->current->process->cpu_cycles < 0) {
+      printf("IO Request. Release: %d; ", job_queue->current->process->id);
 
-      printf("Finished: %d; ", job_queue->current->process->id);
+      job_queue->current->process->io_requests--;
+      job_queue->current->process->io_current = job_queue->current->process->io_interval;
 
-      ev_setNextTask(CPU_RELEASE);
+      /* Set IO_REQUEST task */
+      ev_setNextTask(IO_REQUEST);
       return;
+
+    } else {
+
+      --job_queue->current->process->io_current;
+
+      if (--job_queue->current->process->cpu_cycles < 0) {
+
+        printf("Finish: %d; ", job_queue->current->process->id);
+
+        ev_setNextTask(CPU_RELEASE);
+        return;
+
+      } else {
+
+        printf("Exec: %d; Remaining: %d; IO: %d of %d; ",
+               job_queue->current->process->id,
+               job_queue->current->process->cpu_cycles,
+               job_queue->current->process->io_current + 1,
+               job_queue->current->process->io_requests);
+      }
     }
   }
 

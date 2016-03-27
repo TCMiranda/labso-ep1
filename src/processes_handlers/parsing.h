@@ -9,14 +9,16 @@ FILE* getProcessesFile() {
     return file;
   }
 
-  printf("File not found");
+  printf("File not found\n");
   exit(1);
   return;
 }
 
+/* Process defs assignment
+ * Documented at /src/h/process.h */
 process* fillNextProcess(char* line) {
 
-  process* p = malloc(sizeof(process*));
+  process* p = malloc(sizeof(process));
 
   p->id            = atoi(strtok(line, ","));
   p->arrival_time  = atoi(strtok(NULL, ","));
@@ -24,7 +26,23 @@ process* fillNextProcess(char* line) {
   p->memory        = atoi(strtok(NULL, ","));
   p->io_requests   = atoi(strtok(NULL, ","));
 
-  p->io_interval  = (int) floor(p->cpu_cycles / p->io_requests);
+  if (p->cpu_cycles <= 0) {
+
+    printf("Process cpu time must be > than 0.\n");
+    exit(1);
+    return;
+  }
+
+  if (p->io_requests > p->cpu_cycles) {
+
+    printf("IO requests number must be > than total cpu cicles.\n");
+    exit(1);
+    return;
+  }
+
+  p->io_interval    = (int) floor(p->cpu_cycles / p->io_requests);
+  p->io_current     = p->io_interval - 1;
+  p->io_record_size = IO_DEFAULT_RECORD_SIZE;
 
   free(line);
   return p;
@@ -46,6 +64,8 @@ process* getNextProcessDef(FILE* file) {
   return p;
 }
 
+/* Build processes linked list
+ * and assign cursor references */
 queue_cursor* getProcesses(FILE* file) {
 
   queue_cursor* cursor = malloc(sizeof(queue_cursor));
@@ -72,7 +92,7 @@ queue_cursor* getProcesses(FILE* file) {
        * then skip to processes->next */
       if (processes->process) {
 
-        processes->next = getListNode();
+        processes->next = ol_getListNode();
         processes = processes->next;
       }
 

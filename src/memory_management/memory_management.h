@@ -1,7 +1,6 @@
 memory_entry* memm_getMemoryMapEntry() {
 
   memory_entry* entry = malloc(sizeof(memory_entry));
-
   return entry;
 }
 

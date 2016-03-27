@@ -1,7 +1,6 @@
 queue_cursor* getEntryQueue() {
 
   queue_cursor* cursor = malloc(sizeof(queue_cursor));
-
   return cursor;
 }
 
@@ -15,7 +14,7 @@ void entryQueueProcessValidator(queue_cursor* processes_queue, va_list vas) {
 
     qc_deleteCurrent(processes_queue);
 
-    oneway_list* entry_node = getListNode();
+    oneway_list* entry_node = ol_getListNode();
     entry_node->process = processes_queue->current->process;
 
     qc_push(entry_queue, entry_node);

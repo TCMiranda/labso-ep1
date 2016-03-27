@@ -1,17 +1,25 @@
 #ifndef SIMULATOR_DEFS
 #define SIMULATOR_DEFS
 
+/* DEBUG settings */
 #define DEBUG true
-#define LOOP_CYCLE_DELAY 125000
+#define LOOP_CYCLE_DELAY 75000
 
-/* Memm related defs */
+/* Memory management settings */
 #define MAX_MEMORY_FRAMES 120
 #define MAX_PAGE_MEMORY 30
 
-/* Time required to load process */
-#define MEMM_LOAD_CYCLES_TIME 2
-
-/* Time required to execute io */
-#define IO_EXEC_CYCLES_TIME 5
+/* IO management settings
+ *
+ * Time required to execute io.
+ * The number of records to execute
+ *  is not used on this simulation.
+ *
+ * IO execution time calculated by:
+ * IO = IO_RECORD_EXEC_CYCLES * IO_DEFAULT_RECORD_SIZE
+ *
+ * */
+#define IO_RECORD_EXEC_CYCLES 2
+#define IO_DEFAULT_RECORD_SIZE 3
 
 #endif

@@ -8,31 +8,18 @@ typedef enum {
 
 typedef struct process {
 
-  int id;            // process id
-  int arrival_time;  // arrival time in "loop units"
-  int cpu_cycles;    // cpu cycles consumption
-  int memory;        // memory to be loaded
-  int io_requests;   // i/o event number
+  /* Defined on the entry file */
+  int id;             // Process id
+  int arrival_time;   // Arrival time in "loop units"
+  int cpu_cycles;     // Cpu cycles consumption
+  int memory;         // Memory to be loaded
+  int io_requests;    // I/O event number
 
-  int io_interval;   // i/o requests interval
+  /* Computed and cached at setup */
+  int io_current;     // Current i/o request arrival
+  int io_interval;    // I/O requests computed interval
+  int io_record_size; // Record size to simulate read/write
 
 } process;
-
-typedef struct oneway_list_item {
-
-  process* process;
-
-  struct oneway_list_item* next;
-
-} oneway_list;
-
-oneway_list* getListNode() {
-
-  oneway_list* node = malloc(sizeof(oneway_list*));
-  node->process = NULL;
-  node->next = NULL;
-
-  return node;
-}
 
 #endif

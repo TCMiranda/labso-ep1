@@ -1,0 +1,17 @@
+#ifndef EVENT_LOOP_KEY_HEADERS
+#define EVENT_LOOP_KEY_HEADERS
+
+typedef enum {
+
+  EXIT = 0,
+  PROCESSES_ENTRY,
+  MEMORY_REQUEST,
+  CPU_REQUEST,
+  IO_REQUEST,
+  IO_EXECUTION,
+  IO_RELEASE,
+  CPU_RELEASE
+
+} event_loop_key;
+
+#endif
