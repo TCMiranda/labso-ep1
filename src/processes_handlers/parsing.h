@@ -16,14 +16,15 @@ FILE* getProcessesFile() {
 
 process* fillNextProcess(char* line) {
 
-  const char* tok;
   process* p = malloc(sizeof(process*));
 
-  p->id           = atoi(strtok(line, ","));
-  p->arrival_time = atoi(strtok(NULL, ","));
-  p->cpu_cycles   = atoi(strtok(NULL, ","));
-  p->memory       = atoi(strtok(NULL, ","));
-  p->io           = atoi(strtok(NULL, ","));
+  p->id            = atoi(strtok(line, ","));
+  p->arrival_time  = atoi(strtok(NULL, ","));
+  p->cpu_cycles    = atoi(strtok(NULL, ","));
+  p->memory        = atoi(strtok(NULL, ","));
+  p->io_requests   = atoi(strtok(NULL, ","));
+
+  p->io_interval  = (int) floor(p->cpu_cycles / p->io_requests);
 
   free(line);
   return p;
@@ -98,39 +99,6 @@ queue_cursor* getProcessesList() {
   FILE* f = getProcessesFile();
 
   return getProcesses(f);
-}
-
-void counter(oneway_list* item, va_list vas) {
-
-  int* counter = va_arg(vas, int*);
-  (*counter)++;
-}
-
-void printProcess(process* process) {
-
-  printf("Node(%d) {\n  time: %d\n  cpu: %d\n  memory: %d\n  io: %d \n}\n\n",
-         process->id,
-         process->arrival_time,
-         process->cpu_cycles,
-         process->memory,
-         process->io );
-
-  return;
-}
-
-void processDumper(oneway_list* item, va_list vas) {
-
-  printProcess(item->process);
-}
-
-void processPrinter(oneway_list* item, va_list vas) {
-
-  printf("%d; ", item->process->id);
-}
-
-void processArrivalTimePrinter(oneway_list* item, va_list vas) {
-
-  printf("P(%d: %d); ", item->process->id, item->process->arrival_time);
 }
 
 int getProcessesLength(queue_cursor* processes) {

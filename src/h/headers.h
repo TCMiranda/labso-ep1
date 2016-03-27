@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <math.h>
 
 /* Global */
 #include <simulator_defs.h>
@@ -13,7 +14,8 @@
 #include <memory_map.h>
 
 /* Processes handlers */
-#include <processes_parsing.h>
+#include <debug.h>
+#include <parsing.h>
 #include <entry_queue.h>
 
 /* Memory management */
