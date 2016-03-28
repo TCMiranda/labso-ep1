@@ -3,7 +3,8 @@
 
 typedef enum {
 
-  EXIT = 0,
+  EXIT = -1,
+  DEFAULT_ENTRY,
   PROCESSES_ENTRY,
   MEMORY_REQUEST,
   CPU_REQUEST,

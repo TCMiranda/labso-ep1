@@ -42,15 +42,9 @@ void io_requestExecutionLock(io_lock* io_resources_lock, queue_cursor* io_queue)
              io_resources_lock->process->id,
              io_resources_lock->io_remaining_time);
 
-    } else {
+    } else { printf("Empty IO requests queue"); }
 
-      printf("Empty IO requests queue");
-    }
-
-  } else {
-
-    printf("IO resources locked.");
-  }
+  } else { printf("IO resources locked."); }
 }
 
 void io_computeRelease(io_lock* io_resources_lock, queue_cursor* job_queue) {

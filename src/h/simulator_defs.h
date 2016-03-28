@@ -2,7 +2,7 @@
 #define SIMULATOR_DEFS
 
 /* DEBUG settings */
-#define DEBUG true
+#define DEBUG false
 #define LOOP_CYCLE_DELAY 75000
 
 /* Memory management settings */

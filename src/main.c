@@ -25,38 +25,21 @@ int main() {
 
   memory_map* memory = memm_getMemoryMap();
 
-  /*
-   * Main event loop
-   *
-   * The cycle is currently executing all steps at once.
-   * It should instead apply only one action per cicle:
-   *
-   * -> Update entry queue
-   *   -> Decrease arrival_time
-   *   -> Push arrived events to entry queue
-   *
-   * -> Get next job (job or entry queue)
-   *   -> Check job queue
-   *   -> Load job in memory
-   *
-   * -> Execute job slice
-   *   -> Removes from job queue if finished
-   *
-   * -> Loop
-   */
-  printf(" Cycle   Task  ->  Output\n");
-
   event_loop_key current_task;
+
+  printDebugHeaders();
 
   int cycle = 0;
   while (++cycle) {
 
     current_task = ev_getCurrentTask();
-    printf("[ % 4d ]   %d   ->  ", cycle, current_task);
-    fflush(stdout);
+
+    printCurrentState(cycle, current_task, processes,
+                      entry_queue, job_queue, io_queue);
 
     switch (current_task) {
 
+    /** 0 **/ case DEFAULT_ENTRY:
     /** 1 **/ case PROCESSES_ENTRY:
 
       updateEntryQueue(processes, entry_queue);
@@ -138,6 +121,6 @@ int main() {
     (DEBUG && usleep(LOOP_CYCLE_DELAY));
   }
 
-  printf("\nEnd. Print metrics.\n");
+  printf("\nEnd.\n");
   return 0;
 }

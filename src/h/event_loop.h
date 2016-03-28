@@ -1,7 +1,7 @@
 #ifndef EVENT_LOOP_HEADERS
 #define EVENT_LOOP_HEADERS
 
-#define EV_ENTRY_TASK PROCESSES_ENTRY
+#define EV_ENTRY_TASK DEFAULT_ENTRY
 
 /* Global ev_queue cursor
  * Shouldn't be accessed manually */
