@@ -7,7 +7,7 @@ Nos detalhes da implementação, estão as explicações sobre a estrutura dos c
 Consta também a forma que foi feita a implementação do loop de eventos, de forma a simular todos os casos de execução de processos em um computador segundo definido no artigo como _BASYS simulator_, processamento, escalonamento, memória, io, etc.
 
 
-### Instruções
+## Instruções
 
 ##### O projeto está organizado em
 
