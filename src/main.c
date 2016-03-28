@@ -12,7 +12,6 @@
  *
  * `cycle`       :: Maintains the current CPU cycle
  * `schedule`    :: Maintains the next event step
- *
  */
 int main() {
 
@@ -34,8 +33,11 @@ int main() {
 
     current_task = ev_getCurrentTask();
 
-    printCurrentState(cycle, current_task, processes,
-                      entry_queue, job_queue, io_queue);
+    printCurrentState(cycle, current_task,
+                      qc_cpy(processes),
+                      qc_cpy(entry_queue),
+                      qc_cpy(job_queue),
+                      qc_cpy(io_queue));
 
     switch (current_task) {
 
@@ -54,7 +56,7 @@ int main() {
 
       schl_getNextJob(entry_queue, job_queue, memory);
 
-      printf("Jobs: "); qc_foreach(job_queue, &processPrinter);
+      printf("Jobs: "); qc_foreach(qc_cpy(job_queue), &processPrinter);
 
       if (job_queue->head != NULL) {
 
@@ -110,10 +112,10 @@ int main() {
 
     printf("\n");
 
-    if ( getProcessesLength(entry_queue) == 0 &&
-         getProcessesLength(job_queue)   == 0 &&
-         getProcessesLength(io_queue)    == 0 &&
-         getProcessesLength(processes)   == 0 ||
+    if ( getProcessesLength(qc_cpy(entry_queue)) == 0 &&
+         getProcessesLength(qc_cpy(job_queue))   == 0 &&
+         getProcessesLength(qc_cpy(io_queue))    == 0 &&
+         getProcessesLength(qc_cpy(processes))   == 0 ||
          current_task == EXIT ||
          cycle > 250
          ) break;

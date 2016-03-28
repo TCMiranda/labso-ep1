@@ -12,11 +12,10 @@ void entryQueueProcessValidator(queue_cursor* processes_queue, va_list vas) {
 
   if (processes_queue->current->process->arrival_time <= 0) {
 
-    qc_deleteCurrent(processes_queue);
-
     oneway_list* entry_node = ol_getListNode();
     entry_node->process = processes_queue->current->process;
 
+    qc_deleteCurrent(processes_queue);
     qc_push(entry_queue, entry_node);
   }
 }

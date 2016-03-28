@@ -112,15 +112,40 @@ void qc_deleteCurrent(queue_cursor* cursor) {
   if (cursor->current == NULL)
     return;
 
-  if (cursor->previous != NULL) {
+  if (cursor->current == cursor->head) {
+
+    qc_shift(cursor);
+
+  } else {
 
     cursor->previous->next = cursor->current->next;
+    cursor->current = cursor->previous;
+  }
+}
+
+void qc_next(queue_cursor* cursor) {
+
+  if (cursor->current->next != NULL) {
+
+    cursor->previous = cursor->current;
     cursor->current = cursor->current->next;
 
   } else {
 
-    qc_shift(cursor);
+    qc_reset(cursor);
   }
+}
+
+queue_cursor* qc_cpy(queue_cursor* source) {
+
+  queue_cursor* dest = malloc(sizeof(queue_cursor));
+
+  dest->head     = source->head;
+  dest->previous = source->previous;
+  dest->current  = source->current;
+  dest->tail     = source->tail;
+
+  return dest;
 }
 
 #endif
