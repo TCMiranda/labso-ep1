@@ -58,12 +58,14 @@ Definições extras sobre o programa, como tamanho da memória em:
 - [x] Escolha do evento da fila de pronto
 - [x] Validação da memoria disponivel
 - [x] Carregamento do evento escolhido em memoria disponivel
-- [ ] Divisão da memória em páginas
+- [x] Validação e alocação de memória em páginas
 
 #### Execução
 - [x] Execução do slice definido - fcfs
-- [ ] Execução do slice definido - rr
+- [x] Execução do slice definido - rr
 - [x] Validação do evento
+- [x] Release da CPU
+- [x] Release da memória
 - [x] Loop
 
 #### IO
