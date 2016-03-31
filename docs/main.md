@@ -81,14 +81,14 @@ Os processos seguem o seguinte fluxo:
             |                         |           |
             --> Fila para alocamento _|           v
                                                   |
-            --- Fila de processos prontos <---o---o---|
-            |                                 |       |
-            |                                 v       ^
-            --------> Escalonamento do processo __    |
-                                                  |   |
-            ___ Release da CPU - Requisição IO <__|   ^
-            |                                         |
-            o-------> Lock e execucao de IO __________|
+    --- Fila de processos prontos <----------o----o----|
+    |                                        |         |
+    |                                        v         ^
+    ----------> Escalonamento do processo ---o----|    |
+                                                  |    |
+            ___ Release da CPU - Requisição IO <__|    ^
+            |                                          |
+            o-------> Lock e execucao de IO ___________|
             |                       ^             |
             |                       |             |
             --> Fila para lock IO __|             v
@@ -106,4 +106,15 @@ Onde cada etapa desse ciclo de vida, está ligada a um evento específico.
 Forão desenvolvidos os algorítimos de escalonamento FCFS (first-come, first-served) e Round-robin.
 Cada um dos algorítmos com um foco específico.
 
-O algorítimo FCFS trata os processos como uma fila única e ordenada pela chagada (arival time). Dessa forma, o processo que é escalonado é sempre aquele que chegou primeiro à simulação. O processo escolhido pelo escalonador é executado até atingir uma requisição IO ou ser finalizado.
+O algorítimo FCFS trata os processos como uma fila única e ordenada pela chagada (arival time). Dessa forma, o processo que é escalonado é sempre aquele que chegou primeiro à simulação. O processo escolhido pelo escalonador é executado até atingir uma requisição IO ou ser finalizado. Não existe troca voluntária do processo sendo executado.
+
+Já o algorítmo Round-Robin tem um funcionamento assíncrono. Os processos são interrompidos dado um tempo de processamento determinado. Esse procedimento permite que dois ou mais processos sejam executados em "paralelo". Vale ressaltar que o algorítimo assume um núcleo apenas de processamento, portanto, o paralelismo real não acontece. Porém a troca constante do processo executado permite a simulação do paralelismo, mesmo que em apenas um núcleo.
+
+
+##### Sobre a simulação de requisições IO
+
+As requisição são feitas em três etapas. Primeira a interrupção do processamento dada a requisição. A requisição envia o processo a uma fila, onde aguardará os recursos de IO. Eventualmente haverá recursos para que o processo seja removido da fila e tenha o controle dos recursos de IO. O processo executa as requisições necessárias e libera os recursos ao término. Com a requisição concluída, o processo volta a fila de processos prontos para ser executados.
+
+------
+Tiago de Carvalho Miranda
+Nº 8061855
