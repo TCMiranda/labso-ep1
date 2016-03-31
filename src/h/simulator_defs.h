@@ -6,8 +6,7 @@
 #define LOOP_CYCLE_DELAY 75000
 
 /* Memory management settings */
-#define MAX_MEMORY_FRAMES 120
-#define MAX_PAGE_MEMORY 30
+#define MAX_MEMORY_FRAMES 30
 
 /* IO management settings
  * Sets the time required to execute io requests.
@@ -26,7 +25,7 @@
  *   rr    : Round-robin
  * ]
  */
-#define SCHEDULER_ALGORITHM "rr"
+#define SCHEDULER_ALGORITHM "fcfs"
 #define CPU_EXECUTION_SLICE 3
 
 #endif

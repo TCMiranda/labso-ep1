@@ -10,9 +10,9 @@ O início do simulador se encontra em `src/main`, onde está definido o método 
 
     * processes   -> Processes definitions list loaded from disk
     * entry_queue -> Arrived processes queue, updated every loop
-    * job_queue   -> Executing processes queue, updated on scheduler call
     * io_lock     -> Represents IO execution resource lock
     * memory      -> Memory map, called on central memory request
+    * job_queue   -> Executing processes queue, updated on scheduler call
 
     `cycle`       :: Maintains the current CPU cycle
     `schedule`    :: Maintains the next event step
@@ -59,3 +59,51 @@ A partir do arquivo de configuração dos processos, a lista de processos é cri
 A loop é executado a fim de receber um processo como entrada externa, carrega-lo em memória, processar as requisições de IO, processar os ciclos de CPU, e terminar sua execução.
 
 O Loop é finalizado no momento em que não existem mais processos aguardando entrada, nem sendo processados.
+
+
+##### Sobre a lista e entrada de processos
+
+Dentre os processos executados dentro do loop de eventos, são também executadas a atualização do tempo de chegada dos processos, e o tempo de espera de uma requisição IO.
+
+Dessa forma, entrada de um processo é simulada pelo deccores dos ciclos do loop de eventos.
+
+O primeiro evento tratado no loop, é referente ao tratamento de um processo que entrou no loop. O processamento de simulação da entrada de um evento ocorre ocasionalmente e variavelmente segundo o algorítmo de escalonamento.
+
+No caso de um algorítimo de processamento assíncrono (mais de um processo sendo executado ao mesmo tempo com a divisão de slices de processamento) a entrada é frequente, e executada a cada release da CPU. Já no caso de um algorítimo sequencial, como o "first come, first served", a entrada de processos é realizada apenas após o termino da execução de um processo e a liberação da CPU. Dessa forma, a fila entrada é avaliada e o próximo processo que reservará a CPU é escolhido.
+
+
+##### Sobre o tempo de vida de um processo
+
+Os processos seguem o seguinte fluxo:
+
+    Entrada o------------> Alocamento à memória ___
+            |                         ^           |
+            |                         |           |
+            --> Fila para alocamento _|           v
+                                                  |
+            --- Fila de processos prontos <---o---o---|
+            |                                 |       |
+            |                                 v       ^
+            --------> Escalonamento do processo __    |
+                                                  |   |
+            ___ Release da CPU - Requisição IO <__|   ^
+            |                                         |
+            o-------> Lock e execucao de IO __________|
+            |                       ^             |
+            |                       |             |
+            --> Fila para lock IO __|             v
+                                                  |
+    ___ Termino da execução e liberação da CPU <---
+    |
+    |
+    --------> Liberação da memória alocada ao processo
+
+Onde cada etapa desse ciclo de vida, está ligada a um evento específico.
+
+
+##### Sobre os escalonadores
+
+Forão desenvolvidos os algorítimos de escalonamento FCFS (first-come, first-served) e Round-robin.
+Cada um dos algorítmos com um foco específico.
+
+O algorítimo FCFS trata os processos como uma fila única e ordenada pela chagada (arival time). Dessa forma, o processo que é escalonado é sempre aquele que chegou primeiro à simulação. O processo escolhido pelo escalonador é executado até atingir uma requisição IO ou ser finalizado.

@@ -58,11 +58,11 @@ char* getFormatterProcesses(queue_cursor* queue) {
 
 void printDebugHeaders() {
 
-  printf(" Cycle   Task  ->  % 22s | % 17s | % 17s | % 17s | Output\n",
-         "Processes",
-         "Entry",
-         "Jobs",
-         "IO");
+  printf(" Cycle   Task  ->  % 22s | % 17s | % 17s | % 17s | IO | Output\n",
+         "Processes list",
+         "Entry queue",
+         "Jobs queue",
+         "IO queue");
 }
 
 void printCurrentState(int cycle,
@@ -70,7 +70,8 @@ void printCurrentState(int cycle,
                        queue_cursor* processes,
                        queue_cursor* entry_queue,
                        queue_cursor* job_queue,
-                       queue_cursor* io_queue
+                       queue_cursor* io_queue,
+                       io_lock* io_resources_lock
                        ) {
 
   printf("[ % 4d ] % 3d   ->  % 22s | % 17s | % 17s | % 17s | ",
@@ -80,6 +81,12 @@ void printCurrentState(int cycle,
          getFormatterProcesses(entry_queue),
          getFormatterProcesses(job_queue),
          getFormatterProcesses(io_queue));
+
+  if (io_resources_lock->process) {
+    printf(" %d | ", io_resources_lock->process->id);
+  } else {
+    printf("   | ");
+  }
 
   fflush(stdout);
 }

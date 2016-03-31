@@ -22,6 +22,8 @@ queue_cursor* qc_reset(queue_cursor* cursor) {
 
 void qc_foreach(queue_cursor* cursor, qc_foreach_callback callback, ... ) {
 
+  cursor = qc_reset(cursor);
+
   va_list vas;
   while (true) {
 
@@ -40,13 +42,15 @@ void qc_foreach(queue_cursor* cursor, qc_foreach_callback callback, ... ) {
 
     } else {
 
-      cursor = qc_reset(cursor);
+      qc_reset(cursor);
       break;
     }
   }
 }
 
 void qc_iterate(queue_cursor* cursor, qc_iterate_callback callback, ... ) {
+
+  cursor = qc_reset(cursor);
 
   va_list vas;
   while (true) {
@@ -59,7 +63,8 @@ void qc_iterate(queue_cursor* cursor, qc_iterate_callback callback, ... ) {
 
     } else break;
 
-    if (cursor->current->next != NULL) {
+    if (cursor->current &&
+        cursor->current->next != NULL) {
 
       cursor->previous = cursor->current;
       cursor->current = cursor->current->next;
@@ -84,19 +89,6 @@ void qc_push(queue_cursor* cursor, oneway_list* item) {
 
 void qc_shift(queue_cursor* cursor) {
 
-  oneway_list* head = cursor->head;
-
-  if (cursor->head != NULL) {
-
-    if (cursor->head->process != NULL) {
-
-      if (head != NULL) {
-
-        //free(head);
-      }
-    }
-  }
-
   if (cursor->head->next != NULL) {
 
     cursor->head = cursor->head->next;
@@ -109,18 +101,49 @@ void qc_shift(queue_cursor* cursor) {
 
 void qc_deleteCurrent(queue_cursor* cursor) {
 
-  if (cursor->current == NULL)
+  if (cursor->current == NULL) {
     return;
+  }
 
-  if (cursor->current == cursor->head) {
+  if (cursor->current == cursor->tail) {
+
+    if (cursor->previous != NULL) {
+
+      cursor->previous->next = NULL;
+      cursor->tail = cursor->previous;
+      cursor->current = cursor->tail;
+
+    } else {
+
+      cursor->head = NULL;
+      cursor->previous = NULL;
+      cursor->current = NULL;
+      cursor->tail = NULL;
+    }
+  }
+
+  else if (( cursor->current == cursor->head ) ||
+           ( cursor->previous == NULL )) {
 
     qc_shift(cursor);
-
-  } else {
-
-    cursor->previous->next = cursor->current->next;
-    cursor->current = cursor->previous;
+    qc_reset(cursor);
   }
+
+  else {
+
+    if (cursor->current->next != NULL) {
+
+      cursor->previous->next = cursor->current->next;
+      cursor->current = cursor->previous;
+
+    } else {
+
+      cursor->previous->next = NULL;
+      cursor->current = cursor->previous;
+    }
+  }
+
+  qc_reset(cursor);
 }
 
 void qc_next(queue_cursor* cursor) {
@@ -146,6 +169,24 @@ queue_cursor* qc_cpy(queue_cursor* source) {
   dest->tail     = source->tail;
 
   return dest;
+}
+
+void qc_dump(queue_cursor* cursor) {
+
+  printf("[");
+  if (cursor->head != NULL) {
+    printf("%d|", cursor->head->process->id);
+  } else { printf("_|"); }
+  if (cursor->previous != NULL) {
+    printf("%d|", cursor->previous->process->id);
+  } else { printf("_|"); }
+  if (cursor->current != NULL) {
+    printf("%d|", cursor->current->process->id);
+  } else { printf("_|"); }
+  if (cursor->tail != NULL) {
+    printf("%d", cursor->tail->process->id);
+  } else { printf("_"); }
+  printf("] ");
 }
 
 #endif

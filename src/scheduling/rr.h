@@ -30,13 +30,16 @@ void rr_getNextJob(queue_cursor* entry_queue, queue_cursor* job_queue, memory_ma
     } else {
 
       /* Failed to allocate momory, do smth */
+      break;
     }
   }
 }
 
-void rr_releaseJob(queue_cursor* job_queue) {
+void rr_releaseJob(queue_cursor* job_queue, memory_map* memory) {
 
   printf("Release: %d; ", job_queue->current->process->id);
+
+  memm_freeProcess(memory, job_queue->current->process);
 
   rr_slice_cache = CPU_EXECUTION_SLICE;
 

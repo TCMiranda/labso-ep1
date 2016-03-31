@@ -16,6 +16,8 @@ void entryQueueProcessValidator(queue_cursor* processes_queue, va_list vas) {
     entry_node->process = processes_queue->current->process;
 
     qc_deleteCurrent(processes_queue);
+
+    qc_reset(entry_queue);
     qc_push(entry_queue, entry_node);
   }
 }

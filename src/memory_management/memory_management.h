@@ -33,8 +33,16 @@ bool memm_loadProcess(memory_map* memory, process* process) {
 
   } else {
 
-    printf("Memory overflow on process %d", process->id);
+    printf("Memm overflow %d; ", process->id);
 
     return false;
   }
+}
+
+bool memm_freeProcess(memory_map* memory, process* process) {
+
+  memory->entries[process->id] = NULL;
+  memory->available_frames += process->memory;
+
+  printf("Free %d -> %d; ", process->id, memory->available_frames);
 }

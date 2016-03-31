@@ -29,9 +29,11 @@ void fcfs_getNextJob(queue_cursor* entry_queue, queue_cursor* job_queue, memory_
   }
 }
 
-void fcfs_releaseJob(queue_cursor* job_queue) {
+void fcfs_releaseJob(queue_cursor* job_queue, memory_map* memory) {
 
   printf("Released: %d; ", job_queue->current->process->id);
+
+  memm_freeProcess(memory, job_queue->current->process);
 
   qc_shift(job_queue);
   qc_reset(job_queue);

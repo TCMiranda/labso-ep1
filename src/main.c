@@ -37,7 +37,8 @@ int main() {
                       qc_cpy(processes),
                       qc_cpy(entry_queue),
                       qc_cpy(job_queue),
-                      qc_cpy(io_queue));
+                      qc_cpy(io_queue),
+                      io_resources_lock);
 
     switch (current_task) {
 
@@ -61,22 +62,20 @@ int main() {
       if (job_queue->head != NULL) {
 
         ev_setNextTask(CPU_REQUEST);
-
-      } else {
-
-        ev_setNextTask(PROCESSES_ENTRY);
       }
       break;
 
     /** 3 **/ case CPU_REQUEST:
 
       schl_executeJob(job_queue);
-
       break;
 
     /** 4 **/ case IO_REQUEST:
 
       io_requestHandler(job_queue, io_queue);
+
+      printf("IO Flushed. Jobs: "); qc_foreach(qc_cpy(job_queue), &processPrinter);
+      printf("IO: ");               qc_foreach(qc_cpy(io_queue), &processPrinter);
 
       ev_setNextTask(IO_EXECUTION);
       break;
@@ -90,6 +89,8 @@ int main() {
 
       io_computeRelease(io_resources_lock, job_queue);
 
+      printf("Jobs: "); qc_foreach(qc_cpy(job_queue), &processPrinter);
+
       if (io_queue->head != NULL) {
 
         ev_setNextTask(IO_EXECUTION);
@@ -98,10 +99,12 @@ int main() {
 
     /** 7 **/ case CPU_RELEASE:
 
-      schl_releaseJob(job_queue);
+      schl_releaseJob(job_queue, memory);
       break;
 
     default:
+
+      printf("Reset. Default task");
 
       ev_setNextTask(PROCESSES_ENTRY);
       break;
@@ -112,13 +115,13 @@ int main() {
 
     printf("\n");
 
-    if ( getProcessesLength(qc_cpy(entry_queue)) == 0 &&
-         getProcessesLength(qc_cpy(job_queue))   == 0 &&
-         getProcessesLength(qc_cpy(io_queue))    == 0 &&
-         getProcessesLength(qc_cpy(processes))   == 0 ||
-         current_task == EXIT ||
-         cycle > 250
-         ) break;
+    if (( getProcessesLength(qc_cpy(entry_queue)) == 0 &&
+          getProcessesLength(qc_cpy(job_queue))   == 0 &&
+          getProcessesLength(qc_cpy(io_queue))    == 0 &&
+          getProcessesLength(qc_cpy(processes))   == 0 )||
+        current_task == EXIT ||
+        cycle > 300
+        ) break;
 
     (DEBUG && usleep(LOOP_CYCLE_DELAY));
   }
